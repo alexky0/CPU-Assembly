@@ -1,0 +1,51 @@
+section registers
+r1 a
+r2 b
+r3 result
+
+r4 dividend
+r5 divisor
+
+section pseudo
+CMP ra rb == SUB ra rb r0
+MOV ra rc == ADD ra r0 rc
+NOT ra rc == NOR ra r0 rc
+INC ra == ADI ra 1d
+
+section main
+LDI a 15d
+LDI b 3d
+
+.loop
+MOV a dividend
+MOV b divisor
+JMP .division
+.divend
+CMP dividend r0
+JMC Z .end
+MOV a b
+MOV b dividend
+JMP .loop
+
+.division
+CMP divisor r0
+JMC Z .end
+
+.divloop
+SUB dividend divisor dividend
+JMC Z .zero
+JMC NC .negative
+JMP .divloop
+
+.zero
+LDI r6 0d
+MOV dividend r6
+
+.negative
+NOT dividend dividend
+INC dividend
+JMP .divend
+
+.end
+MOV b result
+HLT

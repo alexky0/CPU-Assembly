@@ -1,0 +1,51 @@
+{
+  "name": "cpu-asm-syntax",
+  "displayName": "CPU Assembly Language Extension",
+  "description": "Syntax highlighting, run button, and more!",
+  "activationEvents": [
+    "onLanguage:myasm"
+  ],
+  "version": "1.2.1",
+  "publisher": "Alex",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/yourrepository.git"
+  },
+  "main": "./extension.js",
+  "contributes": {
+    "menus": {
+      "editor/title": [
+        {
+          "command": "cpuasm.runAssembly",
+          "group": "navigation",
+          "when": "editorLangId == cpuasm"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "cpuasm.runAssembly",
+        "title": "Run Assembly"
+      }
+    ],
+    "languages": [
+      {
+        "id": "cpuasm",
+        "aliases": ["CPU Assembly", "cpuasm"],
+        "extensions": [".cpuasm"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "cpuasm",
+        "scopeName": "source.cpuasm",
+        "path": "./syntaxes/cpuasm.tmLanguage.json"
+      }
+    ]
+  },
+  "engines": {
+    "vscode": "^1.75.0"
+  }
+}

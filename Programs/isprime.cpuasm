@@ -1,0 +1,47 @@
+section registers
+r1 num
+r2 result
+r3 i
+r4 dividend
+r5 divisor
+
+section pseudo
+CMP ra rb == SUB ra rb r0
+INC ra == ADI ra 1d
+MOV ra rc == ADD ra r0 rc
+NOT ra rc == NOR ra r0 rc
+
+section main
+LDI num 241d
+LDI i 2d
+LDI r6 1d
+CMP num r6
+JMC NC .no
+JMC Z .no
+LDI r7 2d
+CMP num r7
+JMC Z .yes
+
+.iterate
+MOV num dividend
+MOV i divisor
+
+.loop
+SUB dividend divisor dividend
+JMC Z .no
+JMC C .loop
+INC i
+CMP num i
+JMC Z .yes
+JMP .iterate
+
+.no
+LDI result 0d
+JMP .end
+
+.yes
+LDI result 1d
+JMP .end
+
+.end
+HLT

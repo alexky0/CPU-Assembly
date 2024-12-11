@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Assembly Docs</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>CPU Assembly Docs</h1>
+        <nav>
+            <a href="#intro">Introduction</a>
+            <a href="#instructions">Instructions</a>
+            <a href="#numbers">Numbers</a>
+            <a href="#examples">Examples</a>
+            <a href="#setup">Setup</a>
+        </nav>
+    </header>
+    <main>
+        <section id="intro">
+            <h2>Introduction</h2>
+            <p>The docs for my custom assembly language. This is to be ran on my custom CPU, currently only designed in Logisim. When the CPU is finished, along with the assembly language, I will begin working on a higher level language to be compiled into this assembly language.</p>
+        </section>
+        <section id="setup">
+            <h2>Setup and Installation</h2>
+            <p>To get started with your custom assembly language, follow these steps:</p>
+            <ol>
+                <li><strong>Download the VSCode Extension:</strong> 
+                    <ul>
+                        <li>Download the <a href="path_to_vscode_extension">CPU Assembly Language Extension</a>.</li>
+                        <li>Note: This extension is only compatible with Windows.</li>
+                    </ul>
+                </li>
+                <li><strong>Create directory</strong>
+                    <ul>
+                        <li>Create a directory of any name in any relative directory, this will be the root directory.</li>
+                        <li>Inside the root directory, create a folder called "programs."</li>
+                        <li>Inside the programs folder, create two new folders: "hex" and "bins."</li>
+                    </ul>
+                </li>
+                <li><strong>Install Python Scripts:</strong>
+                    <ul>
+                        <li>Download the <a href="path_to_assembler">assembler.py</a> and <a href="path_to_bintohex.py">bintohex.py</a> scripts.</li>
+                        <li>Put both these scripts into the root directory.</li>
+                    </ul>
+                </li>
+                <li><strong>Download the Batch File:</strong>
+                    <ul>
+                        <li>Download the <a href="path_to_cpuassemble.bat">cpuassemble.bat</a>.</li>
+                        <li>Put the  batch file into the root directory..</li>
+                    </ul>
+                </li>
+                <li><strong>Running Programs:</strong>
+                    <ul>
+                        <li>Write your assembly files in the "programs" directory, with extension ".cpuasm".</li>
+                        <li>When using the VSCode extension, click "Run Assembly" and it will create a new file in bins and hex, as well as copy the hex code to the clipboard.</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+        <section id="instructions">
+            <h2>Instruction Set</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mnemonic</th>
+                        <th>Description</th>
+                        <th>Opcode</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>NOP</td><td>No Operation</td><td>0000</td></tr>
+                    <tr><td>HLT</td><td>Halt</td><td>0001</td></tr>
+                    <tr><td>ADD</td><td>Addition</td><td>0010</td></tr>
+                    <tr><td>SUB</td><td>Subtraction</td><td>0011</td></tr>
+                    <tr><td>NOR</td><td>Bitwise NOR</td><td>0100</td></tr>
+                    <tr><td>AND</td><td>Bitwise AND</td><td>0101</td></tr>
+                    <tr><td>XOR</td><td>Bitwise XOR</td><td>0110</td></tr>
+                    <tr><td>RSH</td><td>Right Shift</td><td>0111</td></tr>
+                    <tr><td>LDI</td><td>Load Immediate</td><td>1000</td></tr>
+                    <tr><td>ADI</td><td>Add Immediate</td><td>1001</td></tr>
+                    <tr><td>JMP</td><td>Jump</td><td>1010</td></tr>
+                    <tr><td>JMC</td><td>Conditional Jump</td><td>1011</td></tr>
+                </tbody>
+            </table>
+        </section>
+        <section id="numbers">
+            <h2>Number Formats</h2>
+            <p>Numbers in this assembly language can be specified in different bases using specific identifiers:</p>
+            <ul>
+                <li><strong>Binary (b):</strong> Prefix the number with <code>b</code> (e.g., <code>b1010</code> for binary 1010, which equals decimal 10).</li>
+                <li><strong>Hexadecimal (h):</strong> Prefix the number with <code>h</code> (e.g., <code>hA</code> for hexadecimal A, which equals decimal 10).</li>
+                <li><strong>Decimal (d):</strong> Prefix the number with <code>d</code> (e.g., <code>d10</code> for decimal 10).</li>
+                <li><strong>Default:</strong> If no prefix is provided, the number is assumed to be in decimal (e.g., <code>10</code>).</li>
+            </ul>
+            <p>Examples:</p>
+            <pre>
+LDI r1 b1101  # Load binary 1101 (decimal 13) into r1
+LDI r2 hF     # Load hexadecimal F (decimal 15) into r2
+LDI r3 d42    # Load decimal 42 into r3
+LDI r4 7      # Load default decimal 7 into r4
+            </pre>
+        </section>
+        <section id="examples">
+            <h2>Examples</h2>
+            <pre>
+LDI r1 8       # Load an operand (8) into register 1
+LDI r2 7       # Load an operand (7) into register 2
+LDI r4 1       # Load 1 into register 4, to be used later
+SUB r1 r2 r0   # Subtract register 2 (7) from register 1 (8), sets flags
+JMC C 8        # If not negative (r1 >= r2), jump to loop. Else, swap registers using XOR
+XOR r1 r2 r1
+XOR r1 r2 r2
+XOR r1 r2 r1
+
+# Loop start
+SUB r2 r0 r0   # Subtract 0 from register 2
+JMC Z 15       # If r2 - 0 == 0 (r2 == 0), jump to halt, else continue
+ADD r3 r1 r3   # Add r1 to r3
+SUB r2 r4 r2   # Subtract 1 from r2
+JMP 8          # Go to start of loop
+
+HLT            # Stop the program
+            </pre>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Custom Assembly Language Docs</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

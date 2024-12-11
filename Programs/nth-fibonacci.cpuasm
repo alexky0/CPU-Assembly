@@ -1,0 +1,27 @@
+section registers
+r1 a
+r2 b
+r3 c
+r4 num
+r5 count
+
+section pseudo
+MOV ra rc == ADD ra r0 rc
+INC ra == ADI ra 1d
+CMP ra rb == SUB ra rb r0
+
+section main
+LDI a 0d
+LDI b 1d
+LDI c 0d
+LDI num 13d
+LDI count 0d
+CMP num count
+JMC Z 12d
+ADD a b c
+MOV b a
+MOV c b
+INC count
+JMP 5d
+
+HLT

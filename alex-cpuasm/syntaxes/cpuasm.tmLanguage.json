@@ -1,0 +1,63 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "CPU Assembly",
+    "fileTypes": ["cpuasm"],
+    "patterns": [
+        { "include": "#comments" },
+        { "include": "#mnemonics" },
+        { "include": "#registers" },
+        { "include": "#conditions" },
+        { "include": "#numbers" }
+    ],
+    "repository": {
+        "comments": {
+            "patterns": [
+                {
+                    "name": "comment.line.cpuasm",
+                    "match": "#.*$"
+                }
+            ]
+        },
+        "mnemonics": {
+            "patterns": [
+                {
+                    "name": "keyword.control.mnemonic.cpuasm",
+                    "match": "\\b(?:NOP|HLT|ADD|SUB|NOR|AND|XOR|RSH|LDI|ADI|JMP|JMC)\\b"
+                }
+            ]
+        },
+        "registers": {
+            "patterns": [
+                {
+                    "name": "constant.other.symbol.cpuasm",
+                    "match": "\\br[0-9]+\\b"
+                }
+            ]
+        },
+        "conditions": {
+            "patterns": [
+                {
+                    "name": "keyword.operator.condition.cpuasm",
+                    "match": "\\b(?:Z|NZ|C|NC)\\b"
+                }
+            ]
+        },
+        "numbers": {
+            "patterns": [
+                {
+                    "name": "constant.numeric.binary.cpuasm",
+                    "match": "\\b[01]+b\\b"
+                },
+                {
+                    "name": "constant.numeric.hexadecimal.cpuasm",
+                    "match": "\\b[0-9a-fA-F]+h\\b"
+                },
+                {
+                    "name": "constant.numeric.decimal.cpuasm",
+                    "match": "\\b[0-9]+d?\\b"
+                }
+            ]
+        }
+    },
+    "scopeName": "source.cpuasm"
+}

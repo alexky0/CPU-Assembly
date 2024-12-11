@@ -1,0 +1,46 @@
+section registers
+r1 result
+r2 num
+r3 other
+
+r4 op1
+r5 op2
+r6 product
+
+section pseudo
+CMP ra rb == SUB ra rb r0
+MOV ra rc == ADD ra r0 rc
+
+section main
+LDI num 5d # < 6
+LDI result 1d
+LDI r7 1d
+
+.factorial
+CMP num r7
+JMC Z .end
+MOV result op1
+MOV num op2
+JMP .multiply
+.multend
+MOV product result
+SUB num r7 num
+JMP .factorial
+
+.multiply
+XOR product product product
+CMP op1 op2
+JMC C .multloop
+XOR op1 op2 op1
+XOR op1 op2 op2
+XOR op1 op2 op1
+
+.multloop
+CMP op2 r0
+JMC Z .multend
+ADD product op1 product
+SUB op2 r7 op2
+JMP .multloop
+
+.end
+HLT

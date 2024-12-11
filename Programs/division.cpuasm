@@ -1,0 +1,17 @@
+LDI r1 7
+LDI r2 3
+LDI r3 0
+LDI r4 0
+SUB r2 r0 r0
+JMC Z 13
+
+SUB r1 r2 r1
+JMC Z 13
+JMC NC 11
+ADI r3 1
+JMP 6
+
+NOR r1 r0 r4
+ADI r4 1
+
+HLT

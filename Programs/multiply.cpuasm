@@ -1,0 +1,17 @@
+LDI r1 8 # Load an operand (8) into register 1
+LDI r2 7 # Load an operand (7) into register 2
+LDI r4 1 # Load 1 into register 4, to be used later
+SUB r1 r2 r0 # Subtract register 2 (7) from register 1 (8), sets flags
+JMC C 8 # If it's not negative (r1 >= r2), jump to the loop, else (r1 < r2), swap both registers using XOR's 
+XOR r1 r2 r1
+XOR r1 r2 r2
+XOR r1 r2 r1
+
+# Loop start
+SUB r2 r0 r0 #Subtract 0 from register 2
+JMC Z 15 # If r2 - 0 == 0 (r2 == 0), jump to halt, else continue
+ADD r3 r1 r3 # Add r1 to r3
+SUB r2 r4 r2 # Subtract 1 from r2
+JMP 8 # Go to start of loop
+
+HLT # Stop the program
